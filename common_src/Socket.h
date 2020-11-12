@@ -6,20 +6,19 @@
 class Socket {
 private:
     int fd;
-    bool is_closed{};
-    explicit Socket(int fd): fd(fd){}
-    static void _setHints(struct addrinfo* hints);
-    int _tryToBind(struct addrinfo*results);
-    int _tryToConnect(struct addrinfo* results);
-    static bool _couldBind(int socket_fd, struct addrinfo* info);
-    static bool _couldConnect(int socket_fd, struct addrinfo* info);
+    bool is_closed;
 
 public:
     // Crea un socket listo para ser utilizado.
     Socket():fd(-1), is_closed(false){}
 
-    Socket(const Socket&) = default;
+    // Se borran el constructor por copia y el operador =.
+    Socket(const Socket&) = delete;
     Socket operator=(const Socket&) = delete;
+
+    // Se redefinen el constructor por movimiento y el operador = por movimiento.
+    Socket(Socket&& other) noexcept;
+    Socket& operator=(Socket&& other) noexcept;
 
     // Enlaza una dirección al socket de acuerdo al 'service' requerido.
     // Establece una lista de espera de acuerdo a 'acceptance'.
@@ -42,11 +41,28 @@ public:
     // si hubo algún error.
     ssize_t receive(void *buffer, size_t length) const;
 
+    // Retorna un booleano que indica si el fd es mayor a 0 o no.
+    bool is_valid() const;
+
+    // Realiza un shut down del socket de acuerdo al modo recibido.
+    // 0 -> SHUT_RD, cierra el socket para lectura.
+    // 1 -> SHUT_WR, cierra el socket para escritura.
+    // 2 -> SHUT_RDWR, cierra el socket para lectoescritura.
     void shutdown(int mode) const;
 
-    void close() const;
+    // Cierra el socket.
+    void close();
 
+    // Lbera los recursos utilizados por el socket.
     ~Socket();
+
+private:
+    explicit Socket(int fd): fd(fd){}
+    static void _setHints(struct addrinfo* hints);
+    int _tryToBind(struct addrinfo*results);
+    int _tryToConnect(struct addrinfo* results);
+    static bool _couldBind(int socket_fd, struct addrinfo* info);
+    static bool _couldConnect(int socket_fd, struct addrinfo* info);
 };
 
 
