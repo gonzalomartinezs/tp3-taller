@@ -30,6 +30,9 @@ public:
     bool is_dead();
 
     ~ClientThread() override{}
+
+private:
+    std::string generateResponse(std::stringstream &request_stream);
 };
 
 
