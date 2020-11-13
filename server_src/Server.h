@@ -16,9 +16,10 @@ private:
 
 public:
     // Crea un serivdor listo para ser utilizado
-    Server(std::string service, std::string resource, std::ifstream& rsc_file):
-        resources(resource, rsc_file), acceptor(socket, resources),
-        service(std::move(service)), is_running(false) {}
+    Server(std::string service, const std::string& resource,
+           std::ifstream& rsc_file): resources(resource, rsc_file),
+           acceptor(socket, resources), service(std::move(service)),
+           is_running(false) {}
 
     // Se borran el constructor por copia y el operador =.
     Server(const Server&) = delete;

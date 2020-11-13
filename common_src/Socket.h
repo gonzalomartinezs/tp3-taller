@@ -56,7 +56,7 @@ public:
     ~Socket();
 
 private:
-    explicit Socket(int fd): fd(fd){}
+    explicit Socket(int fd): fd(fd), is_closed(false){}
     static void _setHints(struct addrinfo* hints);
     int _tryToBind(struct addrinfo*results);
     int _tryToConnect(struct addrinfo* results);

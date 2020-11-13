@@ -12,7 +12,7 @@ private:
 
 public:
     // Crea un ejecutor de la instruccion 'GET /' listo para ser ejecutado.
-    GetResourceExecutor(std::string& protocol, std::string& resource,
+    GetResourceExecutor(const std::string& protocol, std::string& resource,
                         ProtectedResources& resources): resources(resources),
                         resource(resource), received_protocol(protocol){}
 

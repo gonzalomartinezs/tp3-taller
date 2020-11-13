@@ -10,7 +10,7 @@ private:
     std::string protocol;
 public:
     // Crea un ejecutor de la instruccion 'GET /' listo para ser ejecutado.
-    GetRootExecutor(ProtectedResources &resources, std::string &protocol):
+    GetRootExecutor(ProtectedResources &resources, const std::string &protocol):
                                     resources(resources), protocol(protocol) {}
 
     // Genera la respuesta en base a los atributos del petitorio.

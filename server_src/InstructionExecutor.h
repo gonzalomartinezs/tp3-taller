@@ -10,7 +10,7 @@ private:
 
 public:
     // Crea un ejecutor de instrucciones listo para ser ejecutado.
-    InstructionExecutor(std::string& method, std::string& protocol):
+    InstructionExecutor(std::string& method, const std::string& protocol):
                                     method(method), protocol(protocol){}
     // Constructor por default.
     InstructionExecutor(){}

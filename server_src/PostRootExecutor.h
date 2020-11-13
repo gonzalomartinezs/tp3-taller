@@ -8,7 +8,7 @@ private:
     const std::string protocol;
 public:
     // Crea un ejecutor de la instruccion 'GET /' listo para ser ejecutado.
-    explicit PostRootExecutor(std::string& protocol): protocol(protocol) {}
+    explicit PostRootExecutor(const std::string& protocol):protocol(protocol){}
 
     // Genera la respuesta en base a los atributos del petitorio.
     std::string run() override;
