@@ -3,10 +3,13 @@
 #include <netdb.h>
 #include <unistd.h>
 #include <cstring>
+#include "SocketException.h"
 #define ERROR -1
 #define SUCCESS 0
-
-#include <cerrno>
+#define ERROR_BINDING "Unable to bind: "
+#define ERROR_CONNECTING "Unable to connect: "
+#define ERROR_SENDING "Could not send: "
+#define ERROR_RECEIVING "Could not receive: "
 
 
 Socket::Socket(Socket &&other) noexcept {
@@ -40,15 +43,12 @@ void Socket::bindAndListen(const std::string& service, int acceptance) {
         }
     }
     if (failed){
-        throw;      //exception
+        throw SocketException(ERROR_BINDING);
     }
 }
 
 Socket Socket::accept() const {
     int peer_fd = ::accept(this->fd, nullptr, nullptr);
-//    if (peer_fd == ERROR) {
-//        throw 3;      //exception
-//    }
     return Socket(peer_fd);
 }
 
@@ -62,7 +62,7 @@ void Socket::connect(const std::string& host, const std::string& service) {
 
     int status = getaddrinfo(host.c_str(), service.c_str(), &hints, &results);
     if (status != SUCCESS || _tryToConnect(results) != SUCCESS) {
-        throw;      //exception
+        throw SocketException(ERROR_CONNECTING);
     }
 }
 
@@ -72,9 +72,8 @@ ssize_t Socket::send(const void *buffer, size_t length) const {
 
     while (bytes_sent < (ssize_t)length) {
         ssize_t sent = ::send(this->fd, address,length-bytes_sent, MSG_NOSIGNAL);
-        char* error = strerror(errno);
         if (sent == ERROR) {
-            throw 2;
+            throw SocketException(ERROR_SENDING);
         }
         bytes_sent += sent;
         address += sent;
@@ -90,7 +89,7 @@ ssize_t Socket::receive(void *buffer, size_t length) const {
         ssize_t received = recv(this->fd, address,
                                 length - bytes_received, 0);
         if (received == ERROR) {
-            throw;
+            throw SocketException(ERROR_RECEIVING);
         } else if (received == 0){
             zero_bytes_recv = true;
         }else {
