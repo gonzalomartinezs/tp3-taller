@@ -14,8 +14,8 @@ private:
 
 public:
     // Crea un ejecutor de la instruccion 'GET /' listo para ser ejecutado.
-    PostResourceExecutor(std::string protocol, std::string resource,
-                         std::string body, ProtectedResources& resources):
+    PostResourceExecutor(std::string& protocol, std::string& resource,
+                         std::string& body, ProtectedResources& resources):
                          resources(resources), resource(std::move(resource)),
                          protocol(std::move(protocol)), body(std::move(body)){}
 
