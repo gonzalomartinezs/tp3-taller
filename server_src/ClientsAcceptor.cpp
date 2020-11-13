@@ -1,8 +1,9 @@
 #include <iostream>
 #include "ClientsAcceptor.h"
+#include <list>
 
 void ClientsAcceptor::run() {
-    while(this->server_socket.is_valid()){
+    while (this->server_socket.is_valid()){
         Socket peer = server_socket.accept(); // si el socket se cierra el fd
         if (peer.is_valid()){                 // de peer vale -1
             this->clients.push_back(new ClientThread(std::move(peer),
@@ -10,7 +11,7 @@ void ClientsAcceptor::run() {
             this->clients.back()->start();
             std::list<ClientThread*>::iterator it;
             for (it = this->clients.begin(); it != this->clients.end(); ++it) {
-                if ((*it) != nullptr && (*it)->is_dead()) { // ver si puedo mejorar para no acumular nullptrs en la lista
+                if ((*it) != nullptr && (*it)->is_dead()) {
                     (*it)->join();
                     delete (*it);
                     (*it) = nullptr;
@@ -28,11 +29,11 @@ ClientsAcceptor::~ClientsAcceptor() {
     }
 }
 
-//---------------------------- Métodos privados -----------------------------//
+//---------------------------- Metodos privados -----------------------------//
 
-// Corta la ejecución y realiza un join de los hilos que no se hayan muertos.
+// Corta la ejecucion y realiza un join de los hilos que no se hayan muertos.
 // Libera los recursos utilizados.
-// Posteriormente, vacía la lista de clientes.
+// Posteriormente, vacia la lista de clientes.
 void ClientsAcceptor::_releaseClients() {
     for (ClientThread* client: this->clients){
         if (client != nullptr){

@@ -1,4 +1,7 @@
 #include "GetResourceExecutor.h"
+#include <utility>
+#include <string>
+
 #define NOT_FOUND "not_found"
 
 std::string GetResourceExecutor::run() {

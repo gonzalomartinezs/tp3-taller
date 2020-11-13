@@ -25,7 +25,7 @@ int main(int argc, char** argv) {
            c = (char)getchar();
         } while (c != 'q');
         server.stop();
-    } catch (std::exception& e) {
+    } catch(std::exception& e) {
         std::cerr << e.what() << std::endl;
         return ERROR;
     }

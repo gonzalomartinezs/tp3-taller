@@ -3,20 +3,21 @@
 
 #include "ClientsAcceptor.h"
 #include "../common_src/Socket.h"
+#include <string>
 
 class Server {
 private:
-    ClientsAcceptor acceptor;
     Socket socket;
     ProtectedResources resources;
+    ClientsAcceptor acceptor;
     std::string service;
     bool is_running;
 
 public:
     // Crea un serivdor listo para ser utilizado
     Server(std::string service, std::string resource, std::ifstream& rsc_file):
-                    service(std::move(service)), resources(resource, rsc_file),
-                    acceptor(socket, resources), is_running(false){}
+        resources(resource, rsc_file), acceptor(socket, resources),
+        service(std::move(service)), is_running(false) {}
 
     // Se borran el constructor por copia y el operador =.
     Server(const Server&) = delete;
@@ -26,10 +27,10 @@ public:
     // espera de acuerdo a 'acceptance'.
     void bindAndListen(int acceptance);
 
-    // Pone en ejecución el servidor.
+    // Pone en ejecucion el servidor.
     void run();
 
-    // Finaliza la ejecución del servidor.
+    // Finaliza la ejecucion del servidor.
     void stop();
 
     // Libera los recursos utilizados por el servidor.

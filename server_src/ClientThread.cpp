@@ -3,11 +3,12 @@
 #include <iostream>
 #include <cstring>
 #include <sstream>
+#include <string>
 #include "HTMLInstruction.h"
 #define CHUNK_SIZE 512
 
 void ClientThread::run() {
-    while(this->keep_running){
+    while (this->keep_running){
         char request[CHUNK_SIZE];
         memset(request, 0, CHUNK_SIZE);
         ssize_t  received = this->peer.receive(request, CHUNK_SIZE);

@@ -3,6 +3,7 @@
 #include "GetResourceExecutor.h"
 #include "PostResourceExecutor.h"
 #include "PostRootExecutor.h"
+#include <string>
 
 HTMLInstruction::HTMLInstruction(std::string &method, std::string &resource,
                                  std::string &protocol, std::string &body,
@@ -14,7 +15,8 @@ HTMLInstruction::HTMLInstruction(std::string &method, std::string &resource,
     } else if (method == "POST" && resource == "/"){
         executor = new PostRootExecutor(protocol);
     } else if (method == "POST"){
-        executor = new PostResourceExecutor(protocol, resource, body, resources);
+        executor = new PostResourceExecutor(protocol, resource, body,
+                                                                resources);
     } else {
         executor = new InstructionExecutor(method, protocol);
     }

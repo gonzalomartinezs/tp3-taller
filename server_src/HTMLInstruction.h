@@ -2,11 +2,13 @@
 #define TP3_TALLER_HTMLINSTRUCTION_H
 #include "InstructionExecutor.h"
 #include "ProtectedResources.h"
+#include <string>
+
 class HTMLInstruction {
 private:
     InstructionExecutor* executor;
 public:
-    // Crea una instrucción HTML lista para ser lelvada a cabo.
+    // Crea una instruccion HTML lista para ser lelvada a cabo.
     HTMLInstruction(std::string& method, std::string& resource,
                     std::string& protocol, std::string& body,
                     ProtectedResources& resources);

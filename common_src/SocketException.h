@@ -9,13 +9,13 @@ private:
     char error_message[BUF_LEN];
 
 public:
-    // Crea una excepción lista para ser lanzada.
+    // Crea una excepcion lista para ser lanzada.
     explicit SocketException(const char* fmt, ...) noexcept;
 
-    // Especifica el motivo de la excepción.
+    // Especifica el motivo de la excepcion.
     const char* what() const noexcept override;
 
-    // Libera los recursos de la excepción.
+    // Libera los recursos de la excepcion.
     ~SocketException(){}
 };
 

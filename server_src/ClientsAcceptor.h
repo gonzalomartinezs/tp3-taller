@@ -16,14 +16,14 @@ private:
 public:
     // Crea un aceptador de clientes listo para ser utilizado.
     ClientsAcceptor(Socket& socket, ProtectedResources& resources):
-                                server_socket(socket), resources(resources),
+                                resources(resources), server_socket(socket),
                                 clients_released(false){}
 
     // Se borran el constructor por copia y el operador =.
     ClientsAcceptor(const ClientsAcceptor&) = delete;
     ClientsAcceptor operator=(const ClientsAcceptor&) = delete;
 
-    // Ejecuta la acción del aceptador de clientes.
+    // Ejecuta la accion del aceptador de clientes.
     void run() override;
 
     // Libera los recursos utilizados por el aceptador de clientes.

@@ -3,6 +3,7 @@
 #include <netdb.h>
 #include <unistd.h>
 #include <cstring>
+#include <string>
 #include "SocketException.h"
 #define ERROR -1
 #define SUCCESS 0
@@ -68,10 +69,11 @@ void Socket::connect(const std::string& host, const std::string& service) {
 
 ssize_t Socket::send(const void *buffer, size_t length) const {
     auto* address = (uint8_t*)buffer;  // casteo para realizar operaciones
-    ssize_t bytes_sent = 0;               // ariméticas con dicha  dirección
+    ssize_t bytes_sent = 0;               // arimeticas con dicha  direccion
 
     while (bytes_sent < (ssize_t)length) {
-        ssize_t sent = ::send(this->fd, address,length-bytes_sent, MSG_NOSIGNAL);
+        ssize_t sent = ::send(this->fd, address,length-bytes_sent,
+                                                        MSG_NOSIGNAL);
         if (sent == ERROR) {
             throw SocketException(ERROR_SENDING);
         }
@@ -84,7 +86,7 @@ ssize_t Socket::send(const void *buffer, size_t length) const {
 ssize_t Socket::receive(void *buffer, size_t length) const {
     bool zero_bytes_recv = false;
     auto* address = (uint8_t*)buffer;  // casteo para realizar operaciones
-    ssize_t bytes_received = 0;               // ariméticas con dicha  dirección
+    ssize_t bytes_received = 0;               // arimeticas con dicha  direccion
     while (bytes_received < (ssize_t)length && !zero_bytes_recv) {
         ssize_t received = recv(this->fd, address,
                                 length - bytes_received, 0);
@@ -111,7 +113,7 @@ void Socket::shutdown(const int mode) const {
 }
 
 void Socket::close() {
-    if(!(this->is_closed)){
+    if (!(this->is_closed)){
         ::close(this->fd);
         this->fd = -1;
         this->is_closed = true;
@@ -119,13 +121,13 @@ void Socket::close() {
 }
 
 Socket::~Socket() {
-    if(!(this->is_closed)){
+    if (!(this->is_closed)){
         ::shutdown(this->fd, SHUT_RDWR);
         ::close(this->fd);
     }
 }
 
-//---------------------------- Métodos privados -----------------------------//
+//---------------------------- Metodos privados -----------------------------//
 
 // Setea todos los hints en 0 y modifica el valor de algunos.
 void Socket::_setHints(struct addrinfo* hints){
@@ -135,7 +137,7 @@ void Socket::_setHints(struct addrinfo* hints){
 }
 
 // Itera en las posibles direcciones hasta que se puede enlazar (bind).
-// En caso de éxito modifica el fd del socket y devuelve 0.
+// En caso de exito modifica el fd del socket y devuelve 0.
 // Retorna -1 en caso contrario.
 int Socket::_tryToBind(struct addrinfo *results) {
     bool binded = false;
@@ -152,7 +154,7 @@ int Socket::_tryToBind(struct addrinfo *results) {
 }
 
 
-// Verifica si se pudo enlazar el fd con la dirección recibida.
+// Verifica si se pudo enlazar el fd con la direccion recibida.
 // Retorna true en caso positivo y false en caso contrario.
 bool Socket::_couldBind(int socket_fd, struct addrinfo* info){
     int status = ERROR;
@@ -165,8 +167,8 @@ bool Socket::_couldBind(int socket_fd, struct addrinfo* info){
     return (status != ERROR);
 }
 
-// Itera en las posibles direcciones hasta que se puede establecer una conexión.
-// En caso de éxito modifica el fd del socket y devuelve 0.
+// Itera en las posibles direcciones hasta que se puede establecer una conexion.
+// En caso de exito modifica el fd del socket y devuelve 0.
 // Retorna -1 en caso contrario.
 int Socket::_tryToConnect(struct addrinfo *results) {
     bool connected = false;
@@ -182,7 +184,7 @@ int Socket::_tryToConnect(struct addrinfo *results) {
     return connected? SUCCESS : ERROR;
 }
 
-// Verifica si se pudo establecer una conexión entre el fd y la dirección
+// Verifica si se pudo establecer una conexion entre el fd y la direccion
 // recibida. Retorna true en caso positivo y false en caso contrario.
 bool Socket::_couldConnect(int socket_fd, struct addrinfo *info) {
     int status = ERROR;

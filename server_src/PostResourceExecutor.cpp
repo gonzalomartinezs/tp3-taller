@@ -1,5 +1,6 @@
 #include "PostResourceExecutor.h"
 #include <utility>
+#include <string>
 
 std::string PostResourceExecutor::run() {
     std::string added_resource = this->resource;

@@ -19,16 +19,16 @@ public:
     // como atributo de la clase.
     void parse(std::stringstream &request);
 
-    // Retorna el método del último petitorio parseado.
+    // Retorna el metodo del ultimo petitorio parseado.
     std::string getRequestMethod() const;
 
-    // Retorna el método del último petitorio parseado.
+    // Retorna el metodo del ultimo petitorio parseado.
     std::string getRequestResource() const;
 
-    // Retorna el método del último petitorio parseado.
+    // Retorna el metodo del ultimo petitorio parseado.
     std::string getRequestProtocol() const;
 
-    // Retorna el método del último petitorio parseado.
+    // Retorna el metodo del ultimo petitorio parseado.
     std::string getRequestBody() const;
 
     // Libera los recursos utilizados por el parser.

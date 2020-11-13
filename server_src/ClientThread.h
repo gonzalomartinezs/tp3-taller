@@ -5,6 +5,7 @@
 #include "ProtectedResources.h"
 #include "HTMLRequestParser.h"
 #include <atomic>
+#include <string>
 
 class ClientThread: public Thread {
 private:
@@ -17,16 +18,16 @@ private:
 public:
     // Crea un hilo de cliente listo para ser utilizado.
     ClientThread(Socket&& peer, ProtectedResources& resources):
-                                peer(std::move(peer)), is_running(true),
-                                keep_running(true), resources(resources){}
+                                peer(std::move(peer)), resources(resources),
+                                is_running(true), keep_running(true) {}
 
-    // Ejecuta la acción del hilo del cliente.
+    // Ejecuta la accion del hilo del cliente.
     void run() override;
 
-    // Finaliza la ejecución de la acción del hilo del cliente.
+    // Finaliza la ejecucion de la accion del hilo del cliente.
     void stop();
 
-    // Retorna un booleano que indica si el hilo se encuentra en ejecución o no.
+    // Retorna un booleano que indica si el hilo se encuentra en ejecucion o no.
     bool is_dead();
 
     ~ClientThread() override{}

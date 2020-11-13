@@ -2,13 +2,14 @@
 #define TP3_TALLER_GETROOTEXECUTOR_H
 #include "InstructionExecutor.h"
 #include "ProtectedResources.h"
+#include <string>
 
 class GetRootExecutor: public InstructionExecutor {
 private:
     ProtectedResources& resources;
     std::string protocol;
 public:
-    // Crea un ejecutor de la instrucción 'GET /' listo para ser ejecutado.
+    // Crea un ejecutor de la instruccion 'GET /' listo para ser ejecutado.
     GetRootExecutor(ProtectedResources &resources, std::string &protocol):
                                     resources(resources), protocol(protocol) {}
 
@@ -16,7 +17,7 @@ public:
     std::string run() override;
 
     // Libera los recursos utilizados por el ejecutor de instrucciones.
-    ~GetRootExecutor(){}
+    ~GetRootExecutor() override{}
 };
 
 

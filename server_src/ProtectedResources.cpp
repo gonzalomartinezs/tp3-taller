@@ -1,8 +1,9 @@
 #include "ProtectedResources.h"
 #include "Lock.h"
-#include "HTMLRequestParser.h"
 #include <fstream>
 #include <sstream>
+#include <utility>
+#include <string>
 #define EMPTY ""
 #define NOT_FOUND "not_found"
 
@@ -25,5 +26,8 @@ std::pair<std::string, std::string>
     if (this->resources.find(resource) != this->resources.end()) { //existe
         return this->resources[resource];
     }
-    return {NOT_FOUND,NOT_FOUND};
+    std::pair<std::string, std::string> not_found;
+    not_found.first = NOT_FOUND;
+    not_found.second = NOT_FOUND;
+    return not_found;
 }

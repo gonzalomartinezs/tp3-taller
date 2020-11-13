@@ -19,7 +19,7 @@ public:
     virtual std::string run();
 
     // Libera los recursos utilizados por el ejecutor de instrucciones.
-    ~InstructionExecutor(){}
+    virtual ~InstructionExecutor(){}
 };
 
 

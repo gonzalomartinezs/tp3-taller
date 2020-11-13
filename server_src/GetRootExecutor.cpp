@@ -1,5 +1,6 @@
 #include "GetRootExecutor.h"
 #include <utility>
+#include <string>
 
 std::string GetRootExecutor::run() {
     std::pair<std::string, std::string> resource = resources.search("/");

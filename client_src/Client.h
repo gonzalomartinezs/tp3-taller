@@ -1,9 +1,8 @@
 #ifndef TP3_TALLER_CLIENT_H
 #define TP3_TALLER_CLIENT_H
 #include <fstream>
-
 #include "../common_src/Socket.h"
-
+#include <string>
 
 class Client {
 private:
@@ -22,15 +21,15 @@ public:
     // Conecta el cliente al servidor.
     void connect();
 
-    // Envía al servidor el mensaje contenido en 'message' al servidor.
+    // Envia al servidor el mensaje contenido en 'message' al servidor.
     // Retorna la cantidad de bytes enviados.
     ssize_t send(std::string message);
 
-    // Envía el contenido del archivo 'file' al servidor.
+    // Envia el contenido del archivo 'file' al servidor.
     // Retorna la cantidad de bytes enviados.
     ssize_t send(std::istream &file);
 
-    // Recibe información del servidor y la escribe en el archivo 'file'.
+    // Recibe informacion del servidor y la escribe en el archivo 'file'.
     ssize_t receive(std::ostream &file);
 
     // Realiza un shut down del cliente de acuerdo al modo recibido.

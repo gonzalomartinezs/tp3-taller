@@ -16,29 +16,28 @@ public:
     Socket(const Socket&) = delete;
     Socket operator=(const Socket&) = delete;
 
-    // Se redefinen el constructor por movimiento y el operador = por movimiento.
+    // Se redefinen el constructor por movimiento y el operador = por movimiento
     Socket(Socket&& other) noexcept;
     Socket& operator=(Socket&& other) noexcept;
 
-    // Enlaza una dirección al socket de acuerdo al 'service' requerido.
+    // Enlaza una direccion al socket de acuerdo al 'service' requerido.
     // Establece una lista de espera de acuerdo a 'acceptance'.
     void bindAndListen(const std::string& service, int acceptance);
 
-    // Acepta la conexión de la primer petición de conexión de la lista de
-    // espera. Si la operación es exitosa, retorna el coket aceptado.
+    // Acepta la conexion de la primer peticion de conexion de la lista de
+    // espera. Si la operacion es exitosa, retorna el coket aceptado.
     Socket accept() const;
 
-    // Conecta el socket a una dirección de acuerdo al 'host' y al 'service'
+    // Conecta el socket a una direccion de acuerdo al 'host' y al 'service'
     // requerido.
     void connect(const std::string& host, const std::string& service);
 
-    // Envía 'length' bytes del 'buffer'. Retorna la cantidad de bytes enviados
-    // en caso de éxito y -1 si hubo algún error.
+    // Envia 'length' bytes del 'buffer'. Retorna la cantidad de bytes enviados
+    // en caso de exito..
     ssize_t send(const void* buffer, size_t length) const;
 
     // Recibe una cantidad de bytes menor o igual a 'length' y la carga en
-    // 'buffer'. Retorna la cantidad de bytes recibidos en caso de éxito y -1
-    // si hubo algún error.
+    // 'buffer'. Retorna la cantidad de bytes recibidos en caso de exito.
     ssize_t receive(void *buffer, size_t length) const;
 
     // Retorna un booleano que indica si el fd es mayor a 0 o no.

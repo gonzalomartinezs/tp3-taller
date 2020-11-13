@@ -10,13 +10,13 @@ public:
     // Crea un thread listo para ser utilizado.
     Thread(){}
 
-    // Comienza la ejecución del hilo.
+    // Comienza la ejecucion del hilo.
     void start();
 
     // Libera los recursos utilizados por el thread.
     void join();
 
-    // Ejecuta la acción del hilo.
+    // Ejecuta la accion del hilo.
     virtual void run() = 0;
 
     // Destruye el thread

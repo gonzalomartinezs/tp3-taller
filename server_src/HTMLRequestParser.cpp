@@ -1,5 +1,6 @@
 #include "HTMLRequestParser.h"
 #include <sstream>
+#include <string>
 
 void HTMLRequestParser::parse(std::stringstream &request) {
     request >> this->method;

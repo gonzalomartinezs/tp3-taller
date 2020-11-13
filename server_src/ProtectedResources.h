@@ -3,6 +3,7 @@
 #include <string>
 #include <map>
 #include <mutex>
+#include <utility>
 
 class ProtectedResources {
 private:
