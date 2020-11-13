@@ -19,7 +19,7 @@ void ClientThread::run() {
             request_stream.seekg(0);
             std::cout << (first_line + "\n");
             std::string response = generateResponse(request_stream);
-            peer.send(response.c_str(), response.size());
+            peer.send(response.c_str(), strlen(response.c_str()));
         } else {
             this->keep_running = false;
         }
