@@ -1,19 +1,24 @@
 #ifndef TP3_TALLER_CLIENTTHREAD_H
 #define TP3_TALLER_CLIENTTHREAD_H
-#include "../common_src/Thread.h"
+#include "Thread.h"
 #include "../common_src/Socket.h"
+#include "ProtectedResources.h"
+#include "HTMLRequestParser.h"
 #include <atomic>
 
 class ClientThread: public Thread {
 private:
     Socket peer;
+    ProtectedResources& resources;
+    HTMLRequestParser parser;
     std::atomic<bool> is_running;
     std::atomic<bool> keep_running;
 
 public:
     // Crea un hilo de cliente listo para ser utilizado.
-    ClientThread(Socket&& peer): peer(std::move(peer)), is_running(true),
-                                keep_running(true){}
+    ClientThread(Socket&& peer, ProtectedResources& resources):
+                                peer(std::move(peer)), is_running(true),
+                                keep_running(true), resources(resources){}
 
     // Ejecuta la acción del hilo del cliente.
     void run() override;

@@ -1,6 +1,6 @@
 #ifndef TP3_TALLER_CLIENTSACCEPTOR_H
 #define TP3_TALLER_CLIENTSACCEPTOR_H
-#include "../common_src/Thread.h"
+#include "Thread.h"
 #include "../common_src/Socket.h"
 #include "ClientThread.h"
 #include <atomic>
@@ -9,13 +9,15 @@
 class ClientsAcceptor: public Thread {
 private:
     std::list<ClientThread*> clients;
+    ProtectedResources& resources;
     Socket& server_socket;
     bool clients_released;
 
 public:
     // Crea un aceptador de clientes listo para ser utilizado.
-    ClientsAcceptor(Socket& socket): server_socket(socket),
-                                        clients_released(false){}
+    ClientsAcceptor(Socket& socket, ProtectedResources& resources):
+                                server_socket(socket), resources(resources),
+                                clients_released(false){}
 
     // Se borran el constructor por copia y el operador =.
     ClientsAcceptor(const ClientsAcceptor&) = delete;

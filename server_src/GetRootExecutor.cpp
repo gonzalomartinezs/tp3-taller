@@ -1,0 +1,8 @@
+#include "GetRootExecutor.h"
+#include <utility>
+
+std::string GetRootExecutor::run() {
+    std::pair<std::string, std::string> resource = resources.search("/");
+    return (this->protocol + " 200 OK\nContent-Type: text/html\n\n" +
+            resource.second);
+}

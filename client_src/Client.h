@@ -33,6 +33,12 @@ public:
     // Recibe información del servidor y la escribe en el archivo 'file'.
     ssize_t receive(std::ostream &file);
 
+    // Realiza un shut down del cliente de acuerdo al modo recibido.
+    // 0 -> SHUT_RD, cierra el socket para lectura.
+    // 1 -> SHUT_WR, cierra el socket para escritura.
+    // 2 -> SHUT_RDWR, cierra el socket para lectoescritura.
+    void shutdown(int mode);
+
     // Libera los recursos utilizados por el cliente.
     ~Client(){}
 };

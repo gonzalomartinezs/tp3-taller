@@ -1,8 +1,17 @@
 #include "Server.h"
-#include <iostream>
+#include <fstream>
+
+#define ERROR 1
+#define SUCCESS 0
+#define ROOT "/"
 
 int main(int argc, char** argv) {
-    Server server(argv[1]);
+
+    std::ifstream resource(argv[2]);
+    if (!resource){
+        return ERROR;
+    }
+    Server server(argv[1], ROOT, resource);
     server.bindAndListen(2);
     server.run();
 
@@ -12,5 +21,5 @@ int main(int argc, char** argv) {
     } while (c != 'q');
 
     server.stop();
-    return 0;
+    return SUCCESS;
 }

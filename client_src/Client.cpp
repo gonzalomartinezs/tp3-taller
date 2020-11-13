@@ -1,4 +1,5 @@
 #include <cstring>
+#include <sstream>
 #include "Client.h"
 #define CHUNK_SIZE 64
 
@@ -11,13 +12,9 @@ ssize_t Client::send(std::string message) {
 }
 
 ssize_t Client::send(std::istream &file) {
-    ssize_t info_sent = 0;
-    ssize_t sent;
-    std::string line;
-    while (std::getline(file, line)){
-        sent = send(line);
-        info_sent += sent;
-    }
+    std::stringstream content;
+    content << file.rdbuf();
+    ssize_t info_sent = send(content.str());
     return info_sent;
 }
 
@@ -34,5 +31,9 @@ ssize_t Client::receive(std::ostream &file) {
         }
     }
     return info_received;
+}
+
+void Client::shutdown(int mode) {
+    this->socket.shutdown(mode);
 }
 

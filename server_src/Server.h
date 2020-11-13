@@ -8,13 +8,15 @@ class Server {
 private:
     ClientsAcceptor acceptor;
     Socket socket;
+    ProtectedResources resources;
     std::string service;
     bool is_running;
 
 public:
     // Crea un serivdor listo para ser utilizado
-    Server(std::string service): service(std::move(service)), acceptor(socket),
-                                    is_running(false){}
+    Server(std::string service, std::string resource, std::ifstream& rsc_file):
+                    service(std::move(service)), resources(resource, rsc_file),
+                    acceptor(socket, resources), is_running(false){}
 
     // Se borran el constructor por copia y el operador =.
     Server(const Server&) = delete;

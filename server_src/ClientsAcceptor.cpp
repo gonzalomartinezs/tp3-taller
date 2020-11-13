@@ -5,7 +5,8 @@ void ClientsAcceptor::run() {
     while(this->server_socket.is_valid()){
         Socket peer = server_socket.accept(); // si el socket se cierra el fd
         if (peer.is_valid()){                 // de peer vale -1
-            this->clients.push_back(new ClientThread(std::move(peer)));
+            this->clients.push_back(new ClientThread(std::move(peer),
+                                                     this->resources));
             this->clients.back()->start();
             std::list<ClientThread*>::iterator it;
             for (it = this->clients.begin(); it != this->clients.end(); ++it) {
