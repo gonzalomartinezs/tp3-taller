@@ -6,6 +6,7 @@
 #include "HTMLRequestParser.h"
 #include <atomic>
 #include <string>
+#include <utility>
 
 class ClientThread: public Thread {
 private:
