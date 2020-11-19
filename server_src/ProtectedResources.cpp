@@ -1,5 +1,4 @@
 #include "ProtectedResources.h"
-#include "Lock.h"
 #include <fstream>
 #include <sstream>
 #include <utility>
@@ -16,13 +15,13 @@ ProtectedResources::ProtectedResources(std::string resource,
 
 void ProtectedResources::add(std::string &&resource, std::string &&protocol,
                              std::string &&body) {
-    Lock lock(mutex);
+    std::lock_guard<std::mutex> lock(this->mutex);
     this->resources[resource] = {protocol, body};
 }
 
 std::pair<std::string, std::string>
         ProtectedResources::search(std::string resource) {
-    Lock lock(mutex);
+    std::lock_guard<std::mutex> lock(this->mutex);
     if (this->resources.find(resource) != this->resources.end()) { //existe
         return this->resources[resource];
     }
