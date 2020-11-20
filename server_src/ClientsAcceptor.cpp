@@ -2,8 +2,7 @@
 #include <iostream>
 #include <list>
 #include <utility>
-#include "SocketException.h"
-#include "SocketClosedException.h"
+#include "../common_src/SocketClosedException.h"
 
 void ClientsAcceptor::run() {
     while (keep_running) {
