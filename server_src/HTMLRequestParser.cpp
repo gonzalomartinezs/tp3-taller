@@ -2,7 +2,7 @@
 #include <sstream>
 #include <string>
 
-void HTMLRequestParser::parse(std::stringstream &request) {
+void HTMLRequestParser::operator()(std::stringstream &request) {
     request >> this->method;
     request >> this->resource;
     request >> this->protocol;
@@ -27,3 +27,4 @@ std::string HTMLRequestParser::getRequestProtocol() const {
 std::string HTMLRequestParser::getRequestBody() const {
     return this->body;
 }
+

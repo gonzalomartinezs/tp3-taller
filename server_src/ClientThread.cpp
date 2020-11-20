@@ -51,7 +51,7 @@ bool ClientThread::is_dead() {
 // Retorna la respuesta al petitorio html.
 std::string ClientThread::_generateResponse(std::stringstream &request_stream) {
     std::string method, resource, protocol, body;
-    this->parser.parse(request_stream);
+    this->parser(request_stream);
     method = this->parser.getRequestMethod();
     resource = this->parser.getRequestResource();
     protocol = this->parser.getRequestProtocol();

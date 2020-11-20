@@ -17,7 +17,7 @@ public:
     // Pre: El petitorio posee el formato correcto.
     // Post: Parsea el petitorio recibido y almacena los elementos del mismo
     // como atributo de la clase.
-    void parse(std::stringstream &request);
+    void operator()(std::stringstream &request);
 
     // Retorna el metodo del ultimo petitorio parseado.
     std::string getRequestMethod() const;
