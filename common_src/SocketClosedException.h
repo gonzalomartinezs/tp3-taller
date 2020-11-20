@@ -9,7 +9,7 @@ private:
 
 public:
     // Crea una excepcion lista para ser lanzada.
-    explicit SocketClosedException() noexcept;
+    explicit SocketClosedException(const char*) noexcept;
 
     // Especifica el motivo de la excepcion.
     const char* what() const noexcept override;

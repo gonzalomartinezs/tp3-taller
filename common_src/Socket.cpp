@@ -55,7 +55,7 @@ Socket Socket::accept() const {
     int peer_fd = ::accept(this->fd, nullptr, nullptr);
     if (peer_fd == ERROR){
         if (errno == EINVAL){
-            throw SocketClosedException();
+            throw SocketClosedException(ERROR_ACCEPTING);
         } else {
             throw SocketException(ERROR_ACCEPTING);
         }
