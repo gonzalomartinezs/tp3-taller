@@ -34,8 +34,7 @@ public:
     ~ClientThread() override{}
 
 private:
-    std::string generateResponse(std::stringstream &request_stream);
+    std::string _generateResponse(std::stringstream &request_stream);
 };
-
 
 #endif //TP3_TALLER_CLIENTTHREAD_H

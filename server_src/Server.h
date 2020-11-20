@@ -32,9 +32,6 @@ public:
 
     // Libera los recursos utilizados por el servidor.
     ~Server();
-
-private:
-    void _stop();
 };
 
 

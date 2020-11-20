@@ -5,12 +5,15 @@
 #include <cstring>
 #include <string>
 #include "SocketException.h"
+#include "SocketClosedException.h"
+
 #define ERROR -1
 #define SUCCESS 0
 #define ERROR_BINDING "Unable to bind: "
 #define ERROR_CONNECTING "Unable to connect: "
 #define ERROR_SENDING "Could not send: "
 #define ERROR_RECEIVING "Could not receive: "
+#define ERROR_ACCEPTING "Could not accept: "
 
 
 Socket::Socket(Socket &&other) noexcept {
@@ -50,6 +53,13 @@ void Socket::bindAndListen(const std::string& service, int acceptance) {
 
 Socket Socket::accept() const {
     int peer_fd = ::accept(this->fd, nullptr, nullptr);
+    if (peer_fd == ERROR){
+        if (errno == EINVAL){
+            throw SocketClosedException();
+        } else {
+            throw SocketException(ERROR_ACCEPTING);
+        }
+    }
     return Socket(peer_fd);
 }
 
@@ -100,10 +110,6 @@ ssize_t Socket::receive(void *buffer, size_t length) const {
         }
     }
     return bytes_received;
-}
-
-bool Socket::is_valid() const{
-    return (this->fd) > 0;
 }
 
 void Socket::shutdown(const int mode) const {

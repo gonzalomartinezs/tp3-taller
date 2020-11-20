@@ -40,9 +40,6 @@ public:
     // 'buffer'. Retorna la cantidad de bytes recibidos en caso de exito.
     ssize_t receive(void *buffer, size_t length) const;
 
-    // Retorna un booleano que indica si el fd es mayor a 0 o no.
-    bool is_valid() const;
-
     // Realiza un shut down del socket de acuerdo al modo recibido.
     // 0 -> SHUT_RD, cierra el socket para lectura.
     // 1 -> SHUT_WR, cierra el socket para escritura.

@@ -1,49 +1,57 @@
-#include <iostream>
 #include "ClientsAcceptor.h"
+#include <iostream>
 #include <list>
 #include <utility>
+#include "SocketException.h"
+#include "SocketClosedException.h"
 
 void ClientsAcceptor::run() {
-    while (this->server_socket.is_valid()){
-        Socket peer = server_socket.accept(); // si el socket se cierra el fd
-        if (peer.is_valid()){                 // de peer vale -1
+    while (keep_running) {
+        try {
+            Socket peer = server_socket.accept();
             this->clients.push_back(new ClientThread(std::move(peer),
                                                      this->resources));
             this->clients.back()->start();
-            std::list<ClientThread*>::iterator it;
-            for (it = this->clients.begin(); it != this->clients.end(); ++it) {
-                if ((*it) != nullptr && (*it)->is_dead()) {
-                    (*it)->join();
-                    delete (*it);
-                    (*it) = nullptr;
-                }
-            }
+            _releaseDeadClients();
+        } catch (SocketClosedException &e) {
+            if(keep_running)
+                std::cerr << e.what() << std::endl;
+        } catch (std::exception &e) {
+            std::cerr << e.what() << std::endl;
+        }catch (...) {
+            std::cout << "Unknown error.\n";
         }
     }
-    _releaseClients();
-    this->clients_released = true;
+}
+
+void ClientsAcceptor::stop() {
+    this->keep_running = false;
 }
 
 ClientsAcceptor::~ClientsAcceptor() {
-    if (!clients_released){
-        _releaseClients();
-    }
-}
-
-//---------------------------- Metodos privados -----------------------------//
-
-// Corta la ejecucion y realiza un join de los hilos que no se hayan muertos.
-// Libera los recursos utilizados.
-// Posteriormente, vacia la lista de clientes.
-void ClientsAcceptor::_releaseClients() {
     for (ClientThread* client: this->clients){
-        if (client != nullptr){
-            client->stop();
-            client->join();
-            delete client;
-        }
+        client->stop();
+        client->join();
+        delete client;
     }
     this->clients.clear();
 }
+//---------------------------- Metodos privados -----------------------------//
+
+// Realiza un join de los hilos muertos y libera los recursos utilizados por
+// los mismos.
+void ClientsAcceptor::_releaseDeadClients() {
+    std::list<ClientThread *>::iterator it;
+    for (it = this->clients.begin(); it != this->clients.end();) {
+        if ((*it)->is_dead()) {
+            (*it)->join();
+            delete (*it);
+            it = this->clients.erase(it);
+        } else {
+            ++it;
+        }
+    }
+}
+
 
 

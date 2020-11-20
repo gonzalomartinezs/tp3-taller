@@ -1,6 +1,7 @@
 #include "Server.h"
 #include <fstream>
 #include <iostream>
+
 #define ARGUMENTS_AMOUNT 3
 #define ERROR 1
 #define SUCCESS 0
@@ -27,6 +28,10 @@ int main(int argc, char** argv) {
     } catch(std::exception& e) {
         std::cerr << e.what() << std::endl;
         return ERROR;
+    } catch(...){
+        std::cout << "Unknown error.\n";
+        return ERROR;
     }
+
     return SUCCESS;
 }

@@ -10,11 +10,7 @@ void Server::run() {
 }
 
 Server::~Server() {
-    _stop();
-}
-
-// Finaliza la ejecucion del servidor.
-void Server::_stop() {
+    this->acceptor.stop();
     this->socket.shutdown(SHUT_RDWR);
     this->socket.close();
     this->acceptor.join();

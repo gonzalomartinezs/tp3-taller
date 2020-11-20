@@ -11,13 +11,13 @@ private:
     std::list<ClientThread*> clients;
     ProtectedResources& resources;
     Socket& server_socket;
-    bool clients_released;
+    std::atomic<bool> keep_running;
 
 public:
     // Crea un aceptador de clientes listo para ser utilizado.
     ClientsAcceptor(Socket& socket, ProtectedResources& resources):
                                 resources(resources), server_socket(socket),
-                                clients_released(false){}
+                                keep_running(true){}
 
     // Se borran el constructor por copia y el operador =.
     ClientsAcceptor(const ClientsAcceptor&) = delete;
@@ -26,11 +26,14 @@ public:
     // Ejecuta la accion del aceptador de clientes.
     void run() override;
 
+    // Detiene la ejecución del aceptador de clientes.
+    void stop();
+
     // Libera los recursos utilizados por el aceptador de clientes.
     ~ClientsAcceptor() override;
 
 private:
-    void _releaseClients();
+    void _releaseDeadClients();
 };
 
 
