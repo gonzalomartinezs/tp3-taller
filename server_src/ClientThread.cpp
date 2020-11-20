@@ -26,9 +26,9 @@ void ClientThread::run() {
                 this->keep_running = false;
             }
         }
-    } catch (std::exception &e) {
+    } catch(std::exception &e) {
         std::cerr << e.what() << std::endl;
-    } catch (...) {
+    } catch(...) {
         std::cout << "Unknown error.\n";
     }
     this->is_running = false;

@@ -19,7 +19,7 @@ int main(int argc, char** argv) {
         client.receive(std::cout);
     } catch(std::exception& e) {
         std::cerr << e.what() << std::endl;
-    } catch (...) {
+    } catch(...) {
         std::cout << "Unknown error.\n";
     }
     return 0;

@@ -13,12 +13,12 @@ void ClientsAcceptor::run() {
                                                      this->resources));
             this->clients.back()->start();
             _releaseDeadClients();
-        } catch (SocketClosedException &e) {
-            if(keep_running)
+        } catch(SocketClosedException &e) {
+            if (keep_running)
                 std::cerr << e.what() << std::endl;
-        } catch (std::exception &e) {
+        } catch(std::exception &e) {
             std::cerr << e.what() << std::endl;
-        }catch (...) {
+        } catch(...) {
             std::cout << "Unknown error.\n";
         }
     }
