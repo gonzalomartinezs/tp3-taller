@@ -1,11 +1,10 @@
 #ifndef TP3_TALLER_SOCKETCLOSEDEXCEPTION_H
 #define TP3_TALLER_SOCKETCLOSEDEXCEPTION_H
 #include <exception>
-#define BUF_LEN 256
+#define BUF_LEN 128
 
 class SocketClosedException : public std::exception {
 private:
-    int _errno;
     char error_message[BUF_LEN];
 
 public:

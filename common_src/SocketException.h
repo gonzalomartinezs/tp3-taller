@@ -1,7 +1,7 @@
 #ifndef TP3_TALLER_SOCKETEXCEPTION_H
 #define TP3_TALLER_SOCKETEXCEPTION_H
 #include <exception>
-#define BUF_LEN 256
+#define BUF_LEN 128
 
 class SocketException : public std::exception {
 private:
