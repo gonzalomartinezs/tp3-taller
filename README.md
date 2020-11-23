@@ -97,6 +97,28 @@ En esta sección se indican algunas suposiciones realizadas y decisiones tomadas
 
 - Una de las mayores dificultades enfrentadas fue el hecho de encontrarse que dentro de `ClientThread` el método `send()` del socket siempre fallaba. Esto se debía a que si bien `ClientsAcceptor` le pasaba por moviemiento el socket peer al hilo, el constructor por moviemiento de dicho socket no se encontraba implementado. ESto significaba que cada vez que se llamaba al destructor del objeto que cedió el ownership, se cerraba el file descriptor que ahora estaba en manos del hilo. Finalmente, tras implementar dicho constructor, el problema se vio solucionado.
 
+### Fixes
+Para la reentrega del trabajo se realizaron los siguientes cambios:
+
+- Se agregó un bloque `try-catch` en el método principal de cada hilo.
+
+- Ahora también se realiza un `catch` de las elipsis.
+
+- Cuando el hilo que atiende a un cliente está muerto, no sólo se libera la memoria del mismo sino que se remueve de la lista de clientes.
+
+- Se agregó la excepción `SocketClosedException` para diferenciar el cierre esperado de un socket del inesperado, quedando el diagrama de clases como se muestra a continuación.
+
+![alt text][cliente_socket_fix]
+
+- Se sobrecargó el `operator ()` en la clase `HTMLRequestParser`.
+
+- Se reemplazó la clase `Lock` propia por el `lock_guard` de la STL.
+
+- Se removió el método público `stop` del `Server` y su contenido fue colocado directamente en el destructor de dicha clase. Asimismo, se agregó dicho método (con una implementación distinta) a la clase `ClientsAcceptor`. De esta manera, el diagrama de secuencia de esta parte del programa queda como se muestra a contianuación.
+
+![alt text][sec_server_fix]
+
+
 ## Conclusión
 
 Este trabajo resultó de gran ayuda para comprender el funcionamiento de un cliente-servidor multithreading en un programa. Las implementaciones realizadas permitieron comprender en buena medida cómo funciona este aspecto básico y fundamental para un ingeniero informático/licenciado en sistemas.
@@ -104,8 +126,10 @@ Este trabajo resultó de gran ayuda para comprender el funcionamiento de un clie
 
 
 [cliente_socket]:https://github.com/gonzalomartinezs/tp3-taller/blob/master/img/cliente_socket.png
+[cliente_socket_fix]:https://github.com/gonzalomartinezs/tp3-taller/blob/master/img/cliente_socket_fix.png
 [request]:https://github.com/gonzalomartinezs/tp3-taller/blob/master/img/request.png
 [server]:https://github.com/gonzalomartinezs/tp3-taller/blob/master/img/server.png
 [sec_cliente]:https://github.com/gonzalomartinezs/tp3-taller/blob/master/img/sec_cliente.png
 [sec_request]:https://github.com/gonzalomartinezs/tp3-taller/blob/master/img/sec_request.png
 [sec_server]:https://github.com/gonzalomartinezs/tp3-taller/blob/master/img/sec_server.png
+[sec_server_fix]:https://github.com/gonzalomartinezs/tp3-taller/blob/master/img/sec_server_fix.png

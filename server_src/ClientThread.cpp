@@ -18,6 +18,7 @@ void ClientThread::run() {
                 std::stringstream request_stream(request);
                 std::string first_line;
                 std::getline(request_stream, first_line);
+                request_stream.clear();
                 request_stream.seekg(0);
                 std::cout << (first_line + "\n");
                 std::string response = _generateResponse(request_stream);
